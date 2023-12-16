@@ -43,4 +43,14 @@ export class FirebaseGateway {
       throw new BadGatewayException(`Erro ao buscar documentos no firebase`);
     }
   }
+  public async getItems<T>(
+    collection: ECollections,
+  ): Promise<Array<FirebaseItem<T>>> {
+    try {
+      const result = await firestore().collection(collection).get();
+      return result.docs.map((doc) => doc.data() as FirebaseItem<T>);
+    } catch (err) {
+      throw new BadGatewayException(`Erro ao buscar documentos no firebase`);
+    }
+  }
 }

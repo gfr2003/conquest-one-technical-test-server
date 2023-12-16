@@ -7,6 +7,11 @@ import { GetAssetPriceDTO } from './assets.dto';
 export class AssetsController {
   constructor(private readonly assetsService: AssetsService) {}
 
+  @Get('')
+  public async getAssets(@Res() res: Response): Promise<void> {
+    const response = await this.assetsService.getAssets();
+    res.status(HttpStatusCode.Ok).send(response);
+  }
   @Get('/price')
   public async getAssetsPrice(
     @Query() assetData: GetAssetPriceDTO,

@@ -36,6 +36,9 @@ export class YahooGateway {
       });
       return assetData[0];
     } catch (error) {
+      if (error.response.status === 404) {
+        throw new NotFoundException(`O ativo ${name} não existe.`);
+      }
       throw new BadGatewayException(`Não foi possivel buscar o ativo ${name}`);
     }
   }
